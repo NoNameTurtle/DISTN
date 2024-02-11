@@ -1,0 +1,66 @@
+pre_trained: False
+log_dir: '/DIN_Crossformer'
+tb_subdir: 'runs'
+log_level: INFO
+save_and_log: false
+save_tb: false
+description: Disentangled Integrated Framework with Crossformer
+model_id: DIN_Crossformer
+device: 'cuda:0'
+
+data:
+  root_path: '/ETT-small/'
+  data_name: 'ETTh1'
+  data_path: 'ETTh1.csv'
+  batch_size: 32
+  data: 'ETTh1'
+  embed: 'timeF'
+  freq: 'h'
+  seq_len: 96
+  pred_len: 720
+  label_len: 0
+  features: 'M'
+  target: 'OT'
+  num_workers: 0
+  wavelet: 'coif3'
+  dwt_level: 3
+  show_dwt: false
+
+model:
+  diff_only: false
+  dwt_only: false
+  merge_hf: true
+  independent: true
+  norm_type: global
+  encoder: Crossformer
+  enc_in: 7
+  output_attention: false
+  d_model: 32
+  n_heads: 8
+  d_ff: 32
+  e_layers: 2
+  factor: 3
+  dropout: 0.1
+
+loss:
+  loss_type: 'mae'
+
+train:
+  debug: false
+  epoch: 0
+  epochs: 10
+  cl_learn: false
+  cl_step: 2000
+  log_step: 200
+  plot_loss: true
+  optimizer: adam
+  lr_type: StepLR
+  base_lr: 0.005
+  weight_decay: 0.
+  lr_milestones: [100]
+  lr_decay_ratio: 0.5
+  step_size: 2
+  clip_grad: false
+  max_grad_norm: 5
+  min_epochs: 0
+  early_stop: 3

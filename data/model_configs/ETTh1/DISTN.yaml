@@ -1,0 +1,61 @@
+pre_trained: False
+log_dir: '/DISTN'
+tb_subdir: 'runs'
+log_level: INFO
+save_and_log: false
+save_tb: false
+description: DISTN
+model_id: DISTN
+device: 'cuda:0'
+
+data:
+  root_path: '/ETT-small/'
+  data_name: 'ETTh1'
+  data_path: 'ETTh1.csv'
+  batch_size: 32
+  data: 'ETTh1'
+  embed: 'timeF'
+  freq: 'h'
+  seq_len: 96
+  pred_len: 96
+  label_len: 0
+  features: 'M'
+  target: 'OT'
+  num_workers: 0
+  wavelet: 'coif3'
+  dwt_level: 3
+  show_dwt: false
+
+model:
+  num_nodes: 7
+  norm_type: 'global'
+  d_node_embed: 4
+  tanh_alpha: 3
+  num_neighs: 4
+  d_lf_embed: 256
+  d_hf_embed: 64
+  num_layers: 1
+  dropout: 0.05
+
+loss:
+  loss_type: 'mae'
+
+train:
+  debug: false
+  epoch: 0
+  epochs: 10
+  cl_learn: false
+  cl_step: 2000
+  log_step: 200
+  plot_loss: true
+  optimizer: adam
+  lr_type: StepLR
+  base_lr: 0.0005
+  weight_decay: 0.
+  lr_milestones: [100]
+  lr_decay_ratio: 0.5
+  step_size: 3
+  clip_grad: false
+  max_grad_norm: 5
+  min_epochs: 0
+  early_stop: 3
